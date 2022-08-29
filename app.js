@@ -1,3 +1,4 @@
+// "require" es una función que se usa para importar símbolos desde otros modulos al ámbito actual. El parámetro pasado es el id del módulo. En la implementación de Node.
 var express = require("express");
 var mysql = require("mysql");
 
