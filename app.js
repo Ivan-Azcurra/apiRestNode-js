@@ -30,7 +30,7 @@ app.get("/", function (req, res) {
 });
 
 // me faltaba un "/" en la ruta del get.
-// mostrar todos los articulos.
+// Mostrar todos los articulos.
 app.get("/api/articulos", (req, res) => {
   // "query" consulta a la DB
   conexion.query("SELECT * FROM articulos", (error, filas) => {
@@ -57,8 +57,8 @@ app.get("/api/articulos/:id", (req, res) => {
         // si hay un error lo capturamos y lo mostramos "throw"
         throw error;
       } else {
-        // res.send(fila);
-        res.send(fila[0].descripcion);
+        res.send(fila);
+        // res.send(fila[0].descripcion);
       }
     }
   );
@@ -84,6 +84,51 @@ app.post("/api/articulos", (req, res) => {
       res.send(results);
     }
   });
+});
+
+// Editar articulo
+// parametros req "request"/ res "response"
+// req = a la consuta enviada desde postman / res = la respuesta de postman
+app.put("/api/articulos/:id", (req, res) => {
+  //necesitamos pasar el id y los valores que vamos a actualizar.
+  let id = req.params.id;
+  let descripcion = req.body.descripcion; //body contiene los datos de la "request"
+  let precio = req.body.precio;
+  let stock = req.body.stock;
+  let sql =
+    "UPDATE articulos SET descripcion = ?, precio = ?, stock = ? WHERE id = ?";
+  // "?" va a tomar los valores de las variables delcaradas al principio y va a actualizar los valores "WHERE", cuando el "id" sea igual al que estamos ingresando en la ruta.
+
+  // en el array estan los valores que capturamos.
+  conexion.query(
+    sql,
+    [descripcion, precio, stock, id],
+    function (error, results) {
+      if (error) {
+        // si hay un error lo capturamos y lo mostramos "throw"
+        throw error;
+      } else {
+        res.send(results);
+      }
+    }
+  );
+});
+
+// Eliminar articulo
+app.delete("/api/articulos/:id", (req, res) => {
+  conexion.query(
+    "DELETE FROM articulos WHERE id = ?",
+    [req.params.id],
+    function (error, filas) {
+      if (error) {
+        // si hay un error lo capturamos y lo mostramos "throw"
+        throw error;
+      } else {
+        res.send(filas);
+      }
+    }
+  );
+  // elimina el articulo "WHERE" cuando "?" coincidan los "/:id"
 });
 
 // Variable de entorno (al parece se definen en MAYUSCULAS)
