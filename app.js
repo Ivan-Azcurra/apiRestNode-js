@@ -2,10 +2,13 @@
 var express = require("express");
 var mysql = require("mysql");
 
+var cors = require("cors");
+
 var app = express();
 
 // Con esto le decimos a la aplición que vamos a usar JSON.
 app.use(express.json());
+app.use(cors());
 
 // Establecemos los párametros de conexión con la DB
 var conexion = mysql.createConnection({
