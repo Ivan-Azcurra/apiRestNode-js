@@ -8,6 +8,7 @@ var app = express();
 
 // Con esto le decimos a la aplición que vamos a usar JSON.
 app.use(express.json());
+// llamamos a cors para ser usado.
 app.use(cors());
 
 // Establecemos los párametros de conexión con la DB
